@@ -1,3 +1,0 @@
-# learning microservice
-
-from udemy
