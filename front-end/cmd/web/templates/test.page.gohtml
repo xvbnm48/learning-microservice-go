@@ -37,24 +37,26 @@
         let received = document.getElementById('received');
 
 
-        brokerBtn.addEventListener("click", function(){
-            const body = {
-                method: 'POST',
+        brokerBtn.addEventListener("click", function() {
+
+        const body = {
+            method: 'POST',
+        }
+
+        fetch("http:\/\/localhost:8082", body)
+        .then((response) => response.json())
+        .then((data) => {
+            sent.innerHTML ="empty post request";
+            received.innerHTML = JSON.stringify(data, undefined, 4);
+            if (data.error) {
+                console.log(data.message);
+            } else {
+                output.innerHTML += `<br><strong>Response from broker service</strong>: ${data.message}`;
             }
-            fetch("http:\/\/localhost:8081", body)
-            .then((response) => response.json())
-            .then((data) => {
-                sent.innerHTML= "empty post request";
-                received.innerHTML = JSON.stringify(data, undefined, 4);
-                if (data.error) {
-                    console.log(data.message);
-                } else {
-                    output.innerHTML += `<br><strong>Response from broker service</strong>:  ${data.message}`;
-                }
-            })
-            .catch((error) => {
-                output.innerHTML += "<br> <br> Error: " + error;
-            })
         })
+        .catch((error) => {
+            output.innerHTML += "<br><br>Eror: " + error;
+        })
+    })
     </script>
 {{end}}
