@@ -43,7 +43,7 @@
             method: 'POST',
         }
 
-        fetch("http:\/\/localhost:8082", body)
+        fetch("https:\/\/localhost:8080", body)
         .then((response) => response.json())
         .then((data) => {
             sent.innerHTML ="empty post request";
