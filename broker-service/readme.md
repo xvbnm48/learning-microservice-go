@@ -1,1 +1,1 @@
-part 3, make auth service
+part 3, updating docker 
