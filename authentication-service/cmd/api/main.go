@@ -8,6 +8,10 @@ import (
 	"net/http"
 	"os"
 	"time"
+
+	_ "github.com/jackc/pgconn"
+	_ "github.com/jackc/pgx/v4"
+	_ "github.com/jackc/pgx/v4/stdlib"
 )
 
 const webPort = "8081"
@@ -23,9 +27,15 @@ func main() {
 	log.Println("starting authentication service on port", webPort)
 
 	// TODO: connect to database
-
+	conn := connectToDB()
+	if conn == nil {
+		log.Panic("failed to connect to database")
+	}
 	// set up config
-	app := Config{}
+	app := Config{
+		DB:     conn,
+		Models: data.New(conn),
+	}
 
 	srv := &http.Server{
 		Addr:    fmt.Sprintf(":%s", webPort),
